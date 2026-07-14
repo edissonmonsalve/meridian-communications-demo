@@ -1,0 +1,104 @@
+# Meridian Communications — Enterprise Salesforce Architecture
+
+[![CI](https://github.com/USERNAME/meridian-communications-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/USERNAME/meridian-communications-demo/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Salesforce API](https://img.shields.io/badge/Salesforce%20API-v66.0-00A1E0?logo=salesforce)](sfdx-project.json)
+[![SFDX](https://img.shields.io/badge/Built%20with-SFDX-00A1E0)](https://developer.salesforce.com/tools/salesforcecli)
+
+_(Replace `USERNAME` above with the actual GitHub username/org once this
+repo is pushed — the CI badge won't resolve until then.)_
+
+A complete, original Salesforce Enterprise implementation — data model,
+security architecture, declarative automation, reporting, and CI/CD — built
+from scratch for a fictional B2B connectivity company, specifically so it
+can be published and inspected in full.
+
+**Nothing in this repository derives from real client work.** Object
+names, security model, automation, and data are entirely original,
+designed to demonstrate the same category of enterprise architecture
+decisions that real client work involves, without any of the
+confidentiality problems that come with actually showing real client work.
+See [Why this project exists](PORTFOLIO/README.md#why-this-project-exists)
+for the full reasoning.
+
+## What's here
+
+| Area                 | Highlights                                                                                | Docs                                                                     |
+| -------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| **Data model**       | 7 custom objects, standard-object extensions, 7 Record Types                              | [Entity relationship diagram](PORTFOLIO/diagrams/entity-relationship.md) |
+| **Security**         | 11-role hierarchy, 10 Permission Sets → 6 Permission Set Groups, 3 sharing-rule policies  | [Security model diagram](PORTFOLIO/diagrams/security-model.md)           |
+| **Automation**       | 6 declarative flows + 1 Approval Process, zero Apex triggers                              | [Automation flow diagrams](PORTFOLIO/diagrams/automation-flows.md)       |
+| **Apps & reporting** | 3 role-specific Lightning Apps, 6 reports, 1 cross-functional dashboard                   | [Architecture overview](PORTFOLIO/diagrams/architecture-overview.md)     |
+| **DevOps**           | One-command reproducible deploy, CI/CD pipeline, fictitious data + sample user generation | [Deployment guide](PORTFOLIO/deployment/README.md)                       |
+
+Full technical design and every non-obvious decision, with reasoning:
+**[ARCHITECTURE.md](ARCHITECTURE.md)** and
+**[PORTFOLIO/architecture/decision-log.md](PORTFOLIO/architecture/decision-log.md)**.
+
+## Quick start
+
+```bash
+# One-time: connect a Dev Hub (interactive browser login)
+sf org login web --set-default-dev-hub --alias MeridianDevHub
+
+# Everything else: one command
+./scripts/deploy-all.sh        # macOS/Linux/Git Bash
+.\scripts\deploy-all.ps1       # Windows PowerShell
+```
+
+That creates a Scratch Org, deploys all metadata, loads realistic
+fictitious data, and creates 7 sample users with role-appropriate access.
+Full runbook: [PORTFOLIO/deployment/README.md](PORTFOLIO/deployment/README.md).
+
+## See it without deploying anything
+
+- **[DEMO/](DEMO/)** — 5/15/30-minute guided walkthroughs (built for
+  technical interviews, work just as well as a self-guided tour)
+- **[PORTFOLIO/diagrams/](PORTFOLIO/diagrams/)** — architecture, entity
+  relationship, security, and automation diagrams (render natively on
+  GitHub)
+- **[PORTFOLIO/architecture/decision-log.md](PORTFOLIO/architecture/decision-log.md)**
+  — 8 non-obvious design decisions, with the reasoning behind each
+
+## Repository structure
+
+```
+meridian-communications-demo/
+├── force-app/main/default/   Salesforce metadata (SFDX source format)
+├── scripts/                   Deployment, data generation, evidence capture
+├── ARCHITECTURE.md            Full technical design document
+├── DEMO/                      Interview-ready walkthrough scripts
+├── PORTFOLIO/                 Diagrams, screenshots, deployment guide, sample-data docs
+└── MARKETING/                 Platform-specific portfolio/sales content
+```
+
+## Status
+
+Metadata is complete and internally consistent (every cross-reference
+verified against Salesforce's own metadata schema). Not yet deploy-tested
+against a live org — see
+[PORTFOLIO/deployment/README.md#known-risk-areas-on-first-deploy](PORTFOLIO/deployment/README.md)
+for exactly which parts carry the most first-deploy risk and why, stated
+plainly rather than glossed over.
+
+## License
+
+[MIT](LICENSE) — see that file for the full text. This is a portfolio
+project; reuse the patterns freely, the specific fictional company/data are
+just there to make the patterns concrete.
+
+## Contributing
+
+This is a personal portfolio project, not soliciting external
+contributions — see [CONTRIBUTING.md](CONTRIBUTING.md) for why, and for
+how to fork it if you want to build your own version.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for what's been built and when.
+
+## Roadmap
+
+See [ROADMAP.md](ROADMAP.md) for what's planned next — deployment
+validation, Experience Cloud, and the evidence library are the near-term
+priorities.

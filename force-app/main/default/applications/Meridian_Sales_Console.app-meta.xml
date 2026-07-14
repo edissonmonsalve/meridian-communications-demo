@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Meridian Sales</label>
+    <description
+  >Sales workspace: accounts, opportunities, and service order creation for Account Executives.</description>
+    <brand>
+        <headerColor>#1B4F8C</headerColor>
+    </brand>
+    <navType>Standard</navType>
+    <uiType>Lightning</uiType>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <defaultLandingTab>standard-home</defaultLandingTab>
+    <tabs>standard-home</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Opportunity</tabs>
+    <tabs>Service_Order__c</tabs>
+    <tabs>Network_Site__c</tabs>
+    <tabs>Service_Subscription__c</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>standard-Dashboard</tabs>
+</CustomApplication>

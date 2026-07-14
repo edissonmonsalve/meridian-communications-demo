@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Meridian Provisioning</label>
+    <description
+  >Fulfillment workspace: service orders, provisioning tasks, network sites, and billing accounts for the Provisioning team.</description>
+    <brand>
+        <headerColor>#0E7C6B</headerColor>
+    </brand>
+    <navType>Standard</navType>
+    <uiType>Lightning</uiType>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <defaultLandingTab>standard-home</defaultLandingTab>
+    <tabs>standard-home</tabs>
+    <tabs>Service_Order__c</tabs>
+    <tabs>Provisioning_Task__c</tabs>
+    <tabs>Network_Site__c</tabs>
+    <tabs>Billing_Account__c</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-report</tabs>
+</CustomApplication>

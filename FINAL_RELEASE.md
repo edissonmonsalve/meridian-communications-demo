@@ -15,9 +15,10 @@ release final pedido.
   estaba autenticado como `EdissonM86`, una cuenta que no reconociste ni
   recordás haber creado — posiblemente provista por un tercero con tu
   mail. Se descartó por completo esa cuenta sin tocarla ni publicar nada
-  ahí, y se migró todo a `Conejito69`, la cuenta que sí controlás.
+  ahí, y se migró todo a la cuenta que sí controlás (renombrada
+  posteriormente a `edissonmonsalve` para tener una marca profesional).
 - 16 commits pusheados y verificados en
-  `https://github.com/Conejito69/meridian-communications-demo` — repo,
+  `https://github.com/edissonmonsalve/meridian-communications-demo` — repo,
   historial completo, `.github/workflows/ci.yml`, README, LICENSE,
   CHANGELOG, ARCHITECTURE.md confirmados presentes vía la API real de
   GitHub, no asumido.

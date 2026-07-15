@@ -50,3 +50,9 @@ $RECYCLE.BIN/
 # Real personal freelance-platform strategy notes -- not portfolio
 # content, deliberately kept out of this public repo (see SECURITY_AUDIT_REPORT.md)
 MARKETING/
+
+# Session working reports -- contain real emails, real employer names, and
+# real platform profile IDs gathered while auditing live accounts. Never
+# portfolio content, same rationale as MARKETING/ above.
+MARKETING_FINAL_REPORT.md
+PLATFORM_UPDATES_REPORT.md

@@ -4,7 +4,7 @@
     <description
   >Monthly recurring revenue from active subscriptions, grouped by service type.</description>
     <format>Summary</format>
-    <reportType>Service_Subscription__c</reportType>
+    <reportType>Service_Subscription_Report</reportType>
     <scope>Service_Subscription__c</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

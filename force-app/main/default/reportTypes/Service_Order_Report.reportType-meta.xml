@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Service_Order__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <label>Service Orders</label>
+    <description>Report on Service Order records.</description>
+    <sections>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Service_Order__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Account__c</field>
+            <table>Service_Order__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Order_Date__c</field>
+            <table>Service_Order__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Network_Site__c</field>
+            <table>Service_Order__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Stage__c</field>
+            <table>Service_Order__c</table>
+        </columns>
+        <masterLabel>Service Orders</masterLabel>
+    </sections>
+</ReportType>

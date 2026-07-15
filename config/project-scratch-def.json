@@ -11,11 +11,17 @@
     },
     "communitiesSettings": {
       "enableNetworksEnabled": true
+    }
+  },
+  "objectSettings": {
+    "account": {
+      "sharingModel": "Private"
     },
-    "securitySettings": {
-      "passwordPolicies": {
-        "enableSetPasswordInApi": true
-      }
+    "case": {
+      "sharingModel": "Private"
+    },
+    "opportunity": {
+      "sharingModel": "Private"
     }
   }
 }

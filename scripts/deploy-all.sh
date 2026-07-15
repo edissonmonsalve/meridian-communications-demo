@@ -35,7 +35,10 @@ if ! command -v sf >/dev/null 2>&1; then
   exit 1
 fi
 
-DEV_HUB="$(sf config get target-dev-hub --json 2>/dev/null | node -e 'let d="";process.stdin.on("data",c=>d+=c);process.stdin.on("end",()=>{try{console.log(JSON.parse(d).result.value||"")}catch(e){console.log("")}})' 2>/dev/null || true)"
+# NOTE: `sf config get <key> --json` does not include a "value" field in its
+# result entries in this CLI version -- confirmed empirically. `sf config
+# list --json` does, so that's what this filters instead.
+DEV_HUB="$(sf config list --json 2>/dev/null | node -e 'let d="";process.stdin.on("data",c=>d+=c);process.stdin.on("end",()=>{try{const r=JSON.parse(d).result||[];const hub=r.find(e=>e.key==="target-dev-hub");console.log((hub&&hub.value)||"")}catch(e){console.log("")}})' 2>/dev/null || true)"
 
 if [ -z "$DEV_HUB" ]; then
   echo ""

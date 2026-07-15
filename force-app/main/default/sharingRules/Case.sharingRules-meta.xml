@@ -4,13 +4,8 @@
         <fullName>Critical_Outage_Escalation_Visibility</fullName>
         <label>Critical Outage Escalation Visibility</label>
         <description
-    >Gives the Escalation Reviewers group visibility into critical, active service outages so they can proactively review before an SLA breach.</description>
+    >Gives the Escalation Reviewers group visibility into Critical-priority cases so they can proactively review before an SLA breach. Scoped by Priority rather than Record Type -- criteria sharing rules cannot filter on RecordType directly.</description>
         <accessLevel>Edit</accessLevel>
-        <criteriaItems>
-            <field>RecordType</field>
-            <operation>equals</operation>
-            <value>Service_Outage</value>
-        </criteriaItems>
         <criteriaItems>
             <field>Priority</field>
             <operation>equals</operation>

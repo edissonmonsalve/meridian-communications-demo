@@ -3,7 +3,7 @@
     <fullName>PS_Escalation_Reviewer</fullName>
     <label>Escalation Reviewer</label>
     <description
-  >Cross-functional add-on for members of the Escalation Reviewers public group (senior Tier 2 agents, provisioning leads, and managers who review critical service outages). Assigned directly to individual users rather than bundled into a Permission Set Group, since membership in this group cuts across job functions and doesn't map to one base PSG. Read/edit on Case (reviewers act on existing critical cases, they don't originate them) plus full working access to Escalation Logs.</description>
+  >Cross-functional add-on for the Escalation Reviewers public group (senior staff who review critical outages). Assigned directly to users, not bundled in a PSG. Read/edit on Case, full access to Escalation Logs.</description>
     <objectPermissions>
         <object>Case</object>
         <allowRead>true</allowRead>

@@ -3,7 +3,7 @@
     <fullName>PS_Reports_PowerUser</fullName>
     <label>Reports - Power User</label>
     <description
-  >Cross-cutting add-on granted alongside a job-function permission set. Grants no object or field access of its own — only expanded reporting capabilities (running, exporting, and publishing reports to public folders) on top of whatever records the base permission set already exposes.</description>
+  >Cross-cutting add-on granted alongside a job-function permission set. Grants no object/field access of its own -- only expanded reporting (run, export, publish to public folders) on top of the base set.</description>
     <userPermissions>
         <name>RunReports</name>
         <enabled>true</enabled>

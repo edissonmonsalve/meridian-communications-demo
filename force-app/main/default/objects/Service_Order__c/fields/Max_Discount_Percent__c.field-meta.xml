@@ -7,8 +7,6 @@
   >Service_Order_Line__c.Service_Order__c</summaryForeignKey>
     <summarizedField>Service_Order_Line__c.Discount_Percent__c</summarizedField>
     <summaryOperation>max</summaryOperation>
-    <precision>5</precision>
-    <scale>2</scale>
     <description
   >Highest discount percentage across this order's line items. Drives the Discount Approval process — when this exceeds the approval threshold, the order is routed for approval.</description>
 </CustomField>

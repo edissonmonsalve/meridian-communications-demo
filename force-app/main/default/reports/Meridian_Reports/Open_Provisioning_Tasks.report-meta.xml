@@ -4,7 +4,7 @@
     <description
   >Every provisioning task that isn't yet complete, for the Provisioning team's daily worklist.</description>
     <format>Tabular</format>
-    <reportType>Provisioning_Task__c</reportType>
+    <reportType>Provisioning_Task_Report</reportType>
     <scope>Provisioning_Task__c</scope>
     <showDetails>true</showDetails>
     <columns>

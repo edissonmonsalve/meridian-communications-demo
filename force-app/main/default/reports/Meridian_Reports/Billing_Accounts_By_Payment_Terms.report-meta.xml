@@ -4,7 +4,7 @@
     <description
   >Distribution of billing accounts across payment term categories.</description>
     <format>Summary</format>
-    <reportType>Billing_Account__c</reportType>
+    <reportType>Billing_Account_Report</reportType>
     <scope>Billing_Account__c</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

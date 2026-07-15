@@ -64,7 +64,11 @@ if (-not (Get-Command sf -ErrorAction SilentlyContinue)) {
     exit 1
 }
 
-$devHub = (sf config get target-dev-hub --json 2>$null | ConvertFrom-Json).result.value
+# NOTE: `sf config get <key> --json` does not include a "value" field in its
+# result entries in this CLI version -- confirmed empirically. `sf config
+# list --json` does, so that's what this filters instead.
+$configList = (sf config list --json 2>$null | ConvertFrom-Json).result
+$devHub = ($configList | Where-Object { $_.key -eq "target-dev-hub" }).value
 if (-not $devHub) {
     Write-Host ""
     Write-Host "No Dev Hub is connected. This is the one step this script cannot do for you" -ForegroundColor Yellow

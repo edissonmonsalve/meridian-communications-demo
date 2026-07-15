@@ -4,7 +4,7 @@
     <description
   >Fulfillment pipeline: every Service Order grouped by stage, from Submitted through Active.</description>
     <format>Summary</format>
-    <reportType>Service_Order__c</reportType>
+    <reportType>Service_Order_Report</reportType>
     <scope>Service_Order__c</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

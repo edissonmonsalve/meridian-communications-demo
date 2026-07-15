@@ -1,32 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
-    <label>Service Order Fulfillment Orchestration</label>
-    <processType>AutoLaunchedFlow</processType>
-    <status>Active</status>
-    <interviewLabel
-  >Service Order Fulfillment Orchestration {!$Flow.CurrentDateTime}</interviewLabel>
-    <description
-  >Record-triggered on Service_Order__c create. Branches on the order's record type (New Service / Upgrade / Cancellation), calls the Create_Provisioning_Tasks subflow with the appropriate task type, then flags the originating Opportunity (if any) so the Closed Won validation rule can pass.</description>
 
-    <variables>
-        <name>TaskTypeToCreate</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <start>
+    <assignments>
+        <name>Set_Task_Type_New_Service</name>
+        <label>Set Task Type - Site Survey</label>
         <locationX>50</locationX>
-        <locationY>0</locationY>
+        <locationY>250</locationY>
+        <assignmentItems>
+            <assignToReference>TaskTypeToCreate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Site Survey</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Determine_Order_Type</targetReference>
+            <targetReference>Call_Create_Provisioning_Tasks</targetReference>
         </connector>
-        <object>Service_Order__c</object>
-        <triggerType>RecordAfterSave</triggerType>
-        <recordTriggerType>Create</recordTriggerType>
-    </start>
+    </assignments>
+    <assignments>
+        <name>Set_Task_Type_Upgrade</name>
+        <label>Set Task Type - Configuration</label>
+        <locationX>200</locationX>
+        <locationY>250</locationY>
+        <assignmentItems>
+            <assignToReference>TaskTypeToCreate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Configuration</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Call_Create_Provisioning_Tasks</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Task_Type_Cancellation</name>
+        <label>Set Task Type - Decommission</label>
+        <locationX>350</locationX>
+        <locationY>250</locationY>
+        <assignmentItems>
+            <assignToReference>TaskTypeToCreate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Decommission</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Call_Create_Provisioning_Tasks</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Task_Type_Default</name>
+        <label>Set Task Type - Default</label>
+        <locationX>500</locationX>
+        <locationY>250</locationY>
+        <assignmentItems>
+            <assignToReference>TaskTypeToCreate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Configuration</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Call_Create_Provisioning_Tasks</targetReference>
+        </connector>
+    </assignments>
 
     <decisions>
         <name>Determine_Order_Type</name>
@@ -86,74 +125,72 @@
             </connector>
         </rules>
     </decisions>
+    <decisions>
+        <name>Has_Opportunity</name>
+        <label>Has Opportunity</label>
+        <locationX>250</locationX>
+        <locationY>490</locationY>
+        <defaultConnectorLabel>No Opportunity</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity_Is_Set</name>
+            <label>Opportunity Is Set</label>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Mark_Opportunity_Has_Order</targetReference>
+            </connector>
+        </rules>
+    </decisions>
 
-    <assignments>
-        <name>Set_Task_Type_New_Service</name>
-        <label>Set Task Type - Site Survey</label>
+    <description
+  >Record-triggered on Service_Order__c create. Branches on the order's record type (New Service / Upgrade / Cancellation), calls the Create_Provisioning_Tasks subflow with the appropriate task type, then flags the originating Opportunity (if any) so the Closed Won validation rule can pass.</description>
+
+    <interviewLabel
+  >Service Order Fulfillment Orchestration {!$Flow.CurrentDateTime}</interviewLabel>
+
+    <label>Service Order Fulfillment Orchestration</label>
+
+    <processType>AutoLaunchedFlow</processType>
+
+    <recordUpdates>
+        <name>Mark_Opportunity_Has_Order</name>
+        <label>Mark Opportunity Has Order</label>
+        <locationX>150</locationX>
+        <locationY>610</locationY>
+        <inputAssignments>
+            <field>Has_Service_Order__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__c</elementReference>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+    </recordUpdates>
+
+    <start>
         <locationX>50</locationX>
-        <locationY>250</locationY>
-        <assignmentItems>
-            <assignToReference>TaskTypeToCreate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Site Survey</stringValue>
-            </value>
-        </assignmentItems>
+        <locationY>0</locationY>
         <connector>
-            <targetReference>Call_Create_Provisioning_Tasks</targetReference>
+            <targetReference>Determine_Order_Type</targetReference>
         </connector>
-    </assignments>
+        <object>Service_Order__c</object>
+        <triggerType>RecordAfterSave</triggerType>
+        <recordTriggerType>Create</recordTriggerType>
+    </start>
 
-    <assignments>
-        <name>Set_Task_Type_Upgrade</name>
-        <label>Set Task Type - Configuration</label>
-        <locationX>200</locationX>
-        <locationY>250</locationY>
-        <assignmentItems>
-            <assignToReference>TaskTypeToCreate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Configuration</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Call_Create_Provisioning_Tasks</targetReference>
-        </connector>
-    </assignments>
-
-    <assignments>
-        <name>Set_Task_Type_Cancellation</name>
-        <label>Set Task Type - Decommission</label>
-        <locationX>350</locationX>
-        <locationY>250</locationY>
-        <assignmentItems>
-            <assignToReference>TaskTypeToCreate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Decommission</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Call_Create_Provisioning_Tasks</targetReference>
-        </connector>
-    </assignments>
-
-    <assignments>
-        <name>Set_Task_Type_Default</name>
-        <label>Set Task Type - Default</label>
-        <locationX>500</locationX>
-        <locationY>250</locationY>
-        <assignmentItems>
-            <assignToReference>TaskTypeToCreate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Configuration</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Call_Create_Provisioning_Tasks</targetReference>
-        </connector>
-    </assignments>
+    <status>Active</status>
 
     <subflows>
         <name>Call_Create_Provisioning_Tasks</name>
@@ -178,49 +215,11 @@
         </inputAssignments>
     </subflows>
 
-    <decisions>
-        <name>Has_Opportunity</name>
-        <label>Has Opportunity</label>
-        <locationX>250</locationX>
-        <locationY>490</locationY>
-        <defaultConnectorLabel>No Opportunity</defaultConnectorLabel>
-        <rules>
-            <name>Opportunity_Is_Set</name>
-            <label>Opportunity Is Set</label>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Opportunity__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Mark_Opportunity_Has_Order</targetReference>
-            </connector>
-        </rules>
-    </decisions>
-
-    <recordUpdates>
-        <name>Mark_Opportunity_Has_Order</name>
-        <label>Mark Opportunity Has Order</label>
-        <locationX>150</locationX>
-        <locationY>610</locationY>
-        <inputAssignments>
-            <field>Has_Service_Order__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Opportunity__c</elementReference>
-            </value>
-        </filters>
-        <object>Opportunity</object>
-    </recordUpdates>
-
-    <status>Active</status>
+    <variables>
+        <name>TaskTypeToCreate</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

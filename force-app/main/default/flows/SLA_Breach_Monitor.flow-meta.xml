@@ -12,7 +12,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_Critical_Priority</targetReference>
+            <targetReference>Is_SLA_Breached</targetReference>
         </connector>
         <object>Case</object>
         <filterLogic>and</filterLogic>
@@ -23,13 +23,6 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
-        <filters>
-            <field>SLA_Target_DateTime__c</field>
-            <operator>LessThanOrEqualTo</operator>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </filters>
         <schedule>
             <frequency>Daily</frequency>
             <startDate>2026-07-15</startDate>
@@ -38,6 +31,29 @@
         <triggerType>Scheduled</triggerType>
     </start>
 
+    <decisions>
+        <name>Is_SLA_Breached</name>
+        <label>Is SLA Breached?</label>
+        <locationX>150</locationX>
+        <locationY>90</locationY>
+        <defaultConnectorLabel>Not Breached Yet</defaultConnectorLabel>
+        <rules>
+            <name>SLA_Is_Breached</name>
+            <label>SLA Is Breached</label>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference
+        >$Record.SLA_Target_DateTime__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDateTime</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Critical_Priority</targetReference>
+            </connector>
+        </rules>
+    </decisions>
     <decisions>
         <name>Is_Critical_Priority</name>
         <label>Is Critical Priority?</label>

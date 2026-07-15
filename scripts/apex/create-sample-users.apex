@@ -25,10 +25,13 @@ String usernameSuffix =
   '.' +
   UserInfo.getOrganizationId() +
   '@meridian-demo.invalid';
+// Profile label is localized by the org's language setting ("Standard User"
+// in English orgs, a translated label in other locales) -- match by
+// UserLicense instead of a hardcoded English label.
 Id standardUserProfileId = [
   SELECT Id
   FROM Profile
-  WHERE Name = 'Standard User'
+  WHERE UserLicense.Name = 'Salesforce' AND PermissionsModifyAllData = false
   LIMIT 1
 ]
 .Id;
@@ -152,15 +155,33 @@ for (Map<String, Object> def : userDefs) {
   );
   usersToInsert.add(u);
 }
-insert usersToInsert;
+// allOrNone=false: scratch orgs have a small, fixed pool of extra user
+// licenses, so a handful of these inserts are expected to fail with
+// LICENSE_LIMIT_EXCEEDED once the pool is exhausted. Each user is
+// independent (per this script's own design intent), so a partial batch
+// should still create everyone who fits rather than failing the whole run.
+List<Database.SaveResult> userResults = Database.insert(usersToInsert, false);
+for (Integer i = 0; i < userResults.size(); i++) {
+  if (!userResults[i].isSuccess()) {
+    System.debug(
+      'User not created (' +
+        usersToInsert[i].Alias +
+        '): ' +
+        userResults[i].getErrors()[0].getMessage()
+    );
+  }
+}
 
 // ---------------------------------------------------------------------
 // Assign each user's Permission Set Group (+ optional standalone PS)
 // ---------------------------------------------------------------------
 List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
 for (Integer i = 0; i < userDefs.size(); i++) {
-  Map<String, Object> def = userDefs[i];
   User u = usersToInsert[i];
+  if (u.Id == null) {
+    continue; // this user hit LICENSE_LIMIT_EXCEEDED above, nothing to assign
+  }
+  Map<String, Object> def = userDefs[i];
 
   String psgName = (String) def.get('psg');
   Id psgPermSetId = psgPermissionSetIdByGroupName.get(psgName);
@@ -183,7 +204,9 @@ for (Integer i = 0; i < userDefs.size(); i++) {
     );
   }
 }
-insert assignments;
+if (!assignments.isEmpty()) {
+  Database.insert(assignments, false);
+}
 
 // ---------------------------------------------------------------------
 // Put the Tier 2 / Escalation Reviewer user into the Escalation Reviewers
@@ -198,7 +221,10 @@ List<GroupMember> memberships = new List<GroupMember>();
 User tier2User = usersToInsert[5]; // Owen Kestrel
 User tier1User = usersToInsert[4]; // Talia Brechtwood
 
-if (groupIdByDeveloperName.containsKey('Escalation_Reviewers')) {
+if (
+  tier2User.Id != null &&
+  groupIdByDeveloperName.containsKey('Escalation_Reviewers')
+) {
   memberships.add(
     new GroupMember(
       GroupId = groupIdByDeveloperName.get('Escalation_Reviewers'),
@@ -207,21 +233,25 @@ if (groupIdByDeveloperName.containsKey('Escalation_Reviewers')) {
   );
 }
 if (groupIdByDeveloperName.containsKey('All_Support_Agents')) {
-  memberships.add(
-    new GroupMember(
-      GroupId = groupIdByDeveloperName.get('All_Support_Agents'),
-      UserOrGroupId = tier1User.Id
-    )
-  );
-  memberships.add(
-    new GroupMember(
-      GroupId = groupIdByDeveloperName.get('All_Support_Agents'),
-      UserOrGroupId = tier2User.Id
-    )
-  );
+  if (tier1User.Id != null) {
+    memberships.add(
+      new GroupMember(
+        GroupId = groupIdByDeveloperName.get('All_Support_Agents'),
+        UserOrGroupId = tier1User.Id
+      )
+    );
+  }
+  if (tier2User.Id != null) {
+    memberships.add(
+      new GroupMember(
+        GroupId = groupIdByDeveloperName.get('All_Support_Agents'),
+        UserOrGroupId = tier2User.Id
+      )
+    );
+  }
 }
 if (!memberships.isEmpty()) {
-  insert memberships;
+  Database.insert(memberships, false);
 }
 
 System.debug('=== Sample users created ===');

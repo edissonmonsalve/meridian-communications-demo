@@ -3,12 +3,12 @@
     <fullName>PS_Provisioning_Manager</fullName>
     <label>Provisioning - Manager</label>
     <description
-  >Incremental add-on layered on top of PS_Provisioning_Agent inside PSG_Provisioning_Lead (Permission Set Groups take the union of their members' access, so this set only needs to declare what a manager has beyond an agent): the ability to delete a Provisioning Task, and read-only visibility into Billing Accounts to sanity-check billing readiness before closing out fulfillment.</description>
+  >Add-on on top of PS_Provisioning_Agent inside PSG_Provisioning_Lead: declares only what a manager has beyond an agent -- delete on Provisioning Task, read-only on Billing Accounts to check billing readiness.</description>
     <objectPermissions>
         <object>Provisioning_Task__c</object>
         <allowRead>true</allowRead>
         <allowCreate>false</allowCreate>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowDelete>true</allowDelete>
         <viewAllRecords>false</viewAllRecords>
         <modifyAllRecords>false</modifyAllRecords>

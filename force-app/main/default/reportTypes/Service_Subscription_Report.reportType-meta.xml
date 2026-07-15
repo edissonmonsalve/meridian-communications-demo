@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Service_Subscription__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <label>Service Subscriptions</label>
+    <description>Report on Service Subscription records.</description>
+    <sections>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Service_Subscription__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Account__c</field>
+            <table>Service_Subscription__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Service_Type__c</field>
+            <table>Service_Subscription__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Status__c</field>
+            <table>Service_Subscription__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Start_Date__c</field>
+            <table>Service_Subscription__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Monthly_Recurring_Revenue__c</field>
+            <table>Service_Subscription__c</table>
+        </columns>
+        <masterLabel>Service Subscriptions</masterLabel>
+    </sections>
+</ReportType>

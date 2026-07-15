@@ -5,11 +5,12 @@ you're given. Pick based on what the interviewer/client asked for, not
 automatically the longest one — a 30-minute deep dive delivered in 5 minutes
 of a screening call reads as not knowing how to prioritize.
 
-| Script                                               | Use when                                              | Covers                                                                        |
-| ---------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [5-minute-walkthrough.md](5-minute-walkthrough.md)   | Screening call, "walk me through something you built" | Dashboard, 3 apps, one flow, the headline architecture decisions              |
-| [15-minute-walkthrough.md](15-minute-walkthrough.md) | Technical round, dedicated portfolio review slot      | + data model, security model, a live record walkthrough, reports              |
-| [30-minute-walkthrough.md](30-minute-walkthrough.md) | Architect/senior round, "show me everything"          | + all 6 flows, approval process, every non-obvious decision and why, Q&A prep |
+| Script                                                                                     | Use when                                              | Covers                                                                                                                                           |
+| ------------------------------------------------------------------------------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [5-minute-walkthrough.md](5-minute-walkthrough.md)                                         | Screening call, "walk me through something you built" | Dashboard, 3 apps, one flow, the headline architecture decisions                                                                                 |
+| [15-minute-walkthrough.md](15-minute-walkthrough.md)                                       | Technical round, dedicated portfolio review slot      | + data model, security model, a live record walkthrough, reports                                                                                 |
+| [30-minute-walkthrough.md](30-minute-walkthrough.md)                                       | Architect/senior round, "show me everything"          | + all 6 flows, approval process, every non-obvious decision and why, Q&A prep                                                                    |
+| [agentforce-service-assistant-walkthrough.md](agentforce-service-assistant-walkthrough.md) | Client wants to see Agentforce specifically           | The "Meridian Service Assistant" agent: real Service Order lookups, blocking-task explanation, and escalation to a tracked Case + Escalation Log |
 
 ## Before any of these
 

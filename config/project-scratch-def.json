@@ -1,7 +1,7 @@
 {
   "orgName": "Meridian Communications - Enterprise Demo Lab",
   "edition": "Developer",
-  "features": ["EnableSetPasswordInApi", "Communities"],
+  "features": ["EnableSetPasswordInApi", "Communities", "Einstein1AIPlatform"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
@@ -11,6 +11,12 @@
     },
     "communitiesSettings": {
       "enableNetworksEnabled": true
+    },
+    "agentPlatformSettings": {
+      "enableAgentPlatform": true
+    },
+    "einsteinGptSettings": {
+      "enableEinsteinGptPlatform": true
     }
   },
   "objectSettings": {

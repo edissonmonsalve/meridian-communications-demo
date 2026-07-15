@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+
+    <description
+  >One-time utility flow. Creates a single fictional demo account, network site, service order (Provisioning stage), and three provisioning tasks (one complete, one blocked, one pending) for the Meridian Service Assistant Agentforce demo. No inputs. Entirely fictional data. Not part of the Agentforce agent itself — a data-seeding utility only.</description>
+
+    <formulas>
+        <name>OrderDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() - 9</expression>
+    </formulas>
+    <formulas>
+        <name>SiteSurveyDueFormula</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() - 6</expression>
+    </formulas>
+    <formulas>
+        <name>EquipmentInstallDueFormula</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() - 2</expression>
+    </formulas>
+    <formulas>
+        <name>ConfigurationDueFormula</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() + 3</expression>
+    </formulas>
+
+    <interviewLabel
+  >Meridian Seed Demo Data {!$Flow.CurrentDateTime}</interviewLabel>
+
+    <label>Meridian Seed Demo Data</label>
+
+    <processType>AutoLaunchedFlow</processType>
+
+    <recordCreates>
+        <name>Create_Account</name>
+        <label>Create Account</label>
+        <locationX>176</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Create_Site</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <stringValue>Bright Harbor Logistics</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+        <assignRecordIdToReference>NewAccountId</assignRecordIdToReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Site</name>
+        <label>Create Site</label>
+        <locationX>176</locationX>
+        <locationY>170</locationY>
+        <connector>
+            <targetReference>Create_Order</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>NewAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Site_Name__c</field>
+            <value>
+                <stringValue>Bright Harbor - Distribution Center 3</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Street__c</field>
+            <value>
+                <stringValue>4820 Portside Avenue</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>City__c</field>
+            <value>
+                <stringValue>Newport</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>State_Province__c</field>
+            <value>
+                <stringValue>OR</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Postal_Code__c</field>
+            <value>
+                <stringValue>97365</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Country__c</field>
+            <value>
+                <stringValue>USA</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Network_Site__c</object>
+        <assignRecordIdToReference>NewSiteId</assignRecordIdToReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Order</name>
+        <label>Create Order</label>
+        <locationX>176</locationX>
+        <locationY>290</locationY>
+        <connector>
+            <targetReference>Create_Task_Site_Survey</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>NewAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Network_Site__c</field>
+            <value>
+                <elementReference>NewSiteId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Stage__c</field>
+            <value>
+                <stringValue>Provisioning</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Order_Date__c</field>
+            <value>
+                <elementReference>OrderDateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Service_Order__c</object>
+        <assignRecordIdToReference>NewOrderId</assignRecordIdToReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Task_Site_Survey</name>
+        <label>Create Task - Site Survey</label>
+        <locationX>176</locationX>
+        <locationY>410</locationY>
+        <connector>
+            <targetReference>Create_Task_Equipment_Install</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Service_Order__c</field>
+            <value>
+                <elementReference>NewOrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Task_Type__c</field>
+            <value>
+                <stringValue>Site Survey</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Assigned_Queue__c</field>
+            <value>
+                <stringValue>Provisioning</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Due_Date__c</field>
+            <value>
+                <elementReference>SiteSurveyDueFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Provisioning_Task__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Task_Equipment_Install</name>
+        <label>Create Task - Equipment Install</label>
+        <locationX>176</locationX>
+        <locationY>530</locationY>
+        <connector>
+            <targetReference>Create_Task_Configuration</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Service_Order__c</field>
+            <value>
+                <elementReference>NewOrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Task_Type__c</field>
+            <value>
+                <stringValue>Equipment Install</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Blocked</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Assigned_Queue__c</field>
+            <value>
+                <stringValue>Provisioning</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Due_Date__c</field>
+            <value>
+                <elementReference>EquipmentInstallDueFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Provisioning_Task__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Task_Configuration</name>
+        <label>Create Task - Configuration</label>
+        <locationX>176</locationX>
+        <locationY>650</locationY>
+        <inputAssignments>
+            <field>Service_Order__c</field>
+            <value>
+                <elementReference>NewOrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Task_Type__c</field>
+            <value>
+                <stringValue>Configuration</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Assigned_Queue__c</field>
+            <value>
+                <stringValue>Provisioning</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Due_Date__c</field>
+            <value>
+                <elementReference>ConfigurationDueFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Provisioning_Task__c</object>
+    </recordCreates>
+
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_Account</targetReference>
+        </connector>
+    </start>
+
+    <status>Active</status>
+
+    <variables>
+        <name>NewAccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>NewSiteId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>NewOrderId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

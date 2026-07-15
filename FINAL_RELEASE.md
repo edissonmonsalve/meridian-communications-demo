@@ -9,12 +9,20 @@ release final pedido.
 
 ## Qué quedó terminado
 
-**GitHub (repo local)**
+**GitHub (publicado, verificado en el remoto real)**
 
-- 14 commits organizados por funcionalidad, working tree limpio.
+- **Hallazgo importante durante esta fase**: el `gh` CLI de esta máquina
+  estaba autenticado como `EdissonM86`, una cuenta que vos no reconociste
+  ni recordás haber creado — posible que la haya provisto EPAM con tu
+  mail. Se descartó por completo esa cuenta sin tocarla ni publicar nada
+  ahí, y se migró todo a `Conejito69`, la cuenta que sí controlás.
+- 16 commits pusheados y verificados en
+  `https://github.com/Conejito69/meridian-communications-demo` — repo,
+  historial completo, `.github/workflows/ci.yml`, README, LICENSE,
+  CHANGELOG, ARCHITECTURE.md confirmados presentes vía la API real de
+  GitHub, no asumido.
 - Barrido de seguridad confirmado: cero referencias a clientes reales,
   empleador, o credenciales en todo el repo.
-- Remoto creado en `https://github.com/EdissonM86/meridian-communications-demo`.
 
 **Salesforce — metadata (verificado en 2 scratch orgs independientes, no
 uno solo)**
@@ -47,8 +55,6 @@ uno solo)**
 
 ## Qué quedó pendiente
 
-- **Push a GitHub**: el repo remoto existe, pero el push completo fue
-  rechazado — falta un scope de OAuth (`workflow`) en el token de `gh`.
 - **Reports, Dashboard y datos ficticios en Salesforce**: no lograron
   desplegarse / generarse, por las limitaciones reales documentadas abajo.
 - **Usuarios demo**: 0 de 7 creados, por límite de licencias del Dev Hub.
@@ -97,16 +103,14 @@ que ya se activó antes en este proyecto con `sf org list --json`.
 
 ## Qué requiere intervención humana
 
-1. **`gh auth refresh -h github.com -s workflow`** — un comando tuyo,
-   10 segundos, y reintento el push inmediatamente.
-2. **Decisión sobre Fiverr/Upwork/LinkedIn**: ¿autorizás Playwright pese a
+1. **Decisión sobre Fiverr/Upwork/LinkedIn**: ¿autorizás Playwright pese a
    tu instrucción de "no Agent Browser", o esperamos a que exista otra
    herramienta? Sin esto, Partes 3, 4 y 5 no pueden avanzar.
-3. **Las 4 limitaciones de Salesforce de arriba**: agotaron mi capacidad
+2. **Las 4 limitaciones de Salesforce de arriba**: agotaron mi capacidad
    de diagnóstico por configuración. Necesitarían: un caso de soporte a
    Salesforce, o probar con un Dev Hub completamente distinto (no
    EPAM), o aceptar el org como demo solo-metadata sin datos/usuarios.
-4. **Captura de screenshots/video**: requiere que abras vos el org
+3. **Captura de screenshots/video**: requiere que abras vos el org
    (`sf org open --target-org meridian-demo`) y captures manualmente, o
    que autorices explícitamente exponer un frontdoor URL para que lo
    haga por vos.
